@@ -47,7 +47,7 @@ labels = []
 
 movie_matrics = pickle.load(open('F:/movieRecommender/movie_matrics.p', mode='rb'))
 
-
+# Recommend for same type movies
 def recommend_same_type_movie():
     
     movie_id_val = int(e.get())
@@ -94,6 +94,57 @@ def recommend_same_type_movie():
             l.pack()    # 固定窗口位置
             labels.append(l)
 
+
+users_matrics = pickle.load(open('F:/movieRecommender/users_matrics.p', mode='rb'))
+
+# recommend movies for a certain user
+def recommend_your_favorite_movie():
+    
+    user_id_val = int(e.get())
+    top_k = 10
+    loaded_graph = tf.Graph()  #
+    with tf.Session(graph=loaded_graph) as sess:  #
+        # Load saved model
+        loader = tf.train.import_meta_graph(load_dir + '.meta')
+        loader.restore(sess, load_dir)
+
+        #推荐您喜欢的电影
+        probs_embeddings = (users_matrics[user_id_val-1]).reshape([1, 200])
+
+        probs_similarity = tf.matmul(probs_embeddings, tf.transpose(movie_matrics))
+        sim = (probs_similarity.eval())
+    #     print(sim.shape)
+    #     results = (-sim[0]).argsort()[0:top_k]
+    #     print(results)
+        
+    #     sim_norm = probs_norm_similarity.eval()
+    #     print((-sim_norm[0]).argsort()[0:top_k])
+        label1 = tk.Label(window, text='Chosen User', bg='red')
+        label1.pack()
+        labels.append(label1)
+        label2 = tk.Label(window, text= e.get())
+        label2.pack()
+        labels.append(label2)
+        label3 = tk.Label(window, text='Recommended Movie', bg='blue')
+        label3.pack()
+        labels.append(label3)
+        
+        print("以下是给您的推荐：")
+        p = np.squeeze(sim)
+        p[np.argsort(p)[:-top_k]] = 0
+        p = p / np.sum(p)
+        results = set()
+        while len(results) != 5:
+            c = np.random.choice(3883, 1, p=p)[0]
+            results.add(c)
+        for val in (results):
+            print(val)
+            print(movies_orig[val])
+            l = tk.Label(window, text= movies_orig[val])    # 标签的文字
+            l.pack()    # 固定窗口位置
+            labels.append(l)
+            
+
 def clear():
     for i in range(len(labels)):
         labels[i].destroy()
@@ -101,18 +152,23 @@ def clear():
 
 #window = tk.Toplevel()
 window = tk.Tk()
-window.title('Movie Recommendation')
+window.title('movie recommendation')
 
-tk.Label(window, text='Input an integer from 1 ~ 3952').pack()
+tk.Label(window, text='For movie, type an integer in 1 ~ 3952').pack()
+tk.Label(window, text='For user, type an integer in 0 ~ 6040').pack()
 
 e = tk.Entry(window)
 e.pack()
 
-b1 = tk.Button(window, text='Generate Recommendations',height=2,command=recommend_same_type_movie)
+b1 = tk.Button(window, text='Generate Recommendations From Chosen Movie',height=2,command=recommend_same_type_movie)
 b1.pack()
+
+b3 = tk.Button(window, text='Generate Recommendations For Chosen User',height=2,command=recommend_your_favorite_movie)
+b3.pack()
 
 b2 = tk.Button(window, text='Reset',height=2,command=clear)
 b2.pack()
 
+    
 window.mainloop()
 
