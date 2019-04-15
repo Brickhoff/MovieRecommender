@@ -20,7 +20,7 @@ After you get the processed data, you can run the following steps.
 
 1)	In `model_traning.py` file, change `save_dir = 'F:/movieRecommender/save'` to your own directory to store the trained model and checkpoint.
 2)	Run `python model_traning.py` to train the model.
-3)	In `movie_recommender.py` file, change `save_dir = 'F:/movieRecommender/save'` to the same directory you used in step 1.
+3)	In `movie_recommender.py` file, change `save_dir = 'F:/movieRecommender/save'` to the same directory you used in step 1. You also need to change `title_count, title_set, genres2int, features, targets_values, ratings, users, movies, data, movies_orig, users_orig = pickle.load(open('F:/movieRecommender/preprocess.p', mode='rb'))` to the directory where you store `preprocess.p`.
 4)	The calculated `movie_matrics.py` file is uploaded in the Github. However, if you want to calculate the movie_matrics by yourself, you need to firstly change `save_dir = 'F:/movieRecommender/save'` to your own directory and then run the `matrix_generation.py` file. In `movie_recommender.py` file, you need to change `movie_matrics = pickle.load(open('F:/movieRecommender/movie_matrics.p', mode='rb'))` to the correct directory where you stored the `movie_matrics.p` file. You also need to change directory for `user_matrics` in `movie_recommender.py` file.
 5)	Run `python movie_recommender.py` to open the GUI.
 6)	Type an integer number in range 1 to 3952 in the required filed, click **“Generate Recommendations From Chosen Movie”** button to generate recommendations.
@@ -29,5 +29,6 @@ After you get the processed data, you can run the following steps.
 9)	Click **“Reset”** button to clear the current result.
 10)	 You can repeat step 6 to step 9 to find out more recommendations.
 
-
+## Simple Way to Run (From above step)
+After you cloned or downloaded this repository, unzip `prepocess.zip` file, you just need to follow **step 1, 2, 3, 5** to open the GUI.
 
