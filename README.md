@@ -10,7 +10,7 @@ This is a movie recommender using python and tensorflow. The GUI is built by Tki
 -	Numpy
 
 ## Dataset
-The dataset used in this project is the MovieLens 1M dataset ml-1m.zip, which contains 6040 users with 1,000,209 reviews (ratings) on 3952 movies. This dataset has three files: users.dat, movies.dat and ratings.dat.
+The dataset used in this project is the MovieLens 1M dataset ml-1m.zip, which contains 6040 users with 1,000,209 reviews (ratings) on 3952 movies. This dataset has three files: users.dat, movies.dat and ratings.dat. You can download the dataset [here](http://files.grouplens.org/datasets/movielens/ml-1m.zip)
 
 ## How to Run
 The processed data `preprocess.p` file is uploaded in the Github repository, so there is no need to run the `data_download.py` file and `data_processing.py` file to download data and process it. 
